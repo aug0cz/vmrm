@@ -1,0 +1,81 @@
+Table User {
+    ID int [pk, increment]
+    Name varchar
+    Email varchar
+    NameEn varchar
+    PlatformID int [ref: > Department.ID]
+}
+
+Table Department {
+    ID int [pk, increment]
+    Name varchar
+    ShortName varchar 
+}
+
+Table Machine {
+    ID int [pk, increment]
+    Name varchar
+    BmcIp varchar
+    BusiIp varchar
+    Business varchar
+    Description varchar
+    CabinetPositions int [ref: < CabinetPosition.ID]
+    AdminID int [ref: <> User.ID]
+    SN varchar
+}
+
+Table Cpu {
+    ID int [pk, increment]
+    Name varchar
+    Core int
+    Thread int
+    Vendor varchar
+    MachineId int [ref: > Machine.ID]
+}
+
+Table Memory {
+    ID int [pk, increment]
+    Name varchar
+    SizeMib int
+    Vendor varchar
+    SN varchar
+    MachineId int [ref: > Machine.ID]
+}
+
+Table Disk {
+    ID int [pk, increment]
+    Name varchar
+    SizeMib int
+    SN varchar
+    Vendor varchar
+    MachineId int [ref: > Machine.ID]
+}
+
+
+Table DC {
+    ID int [pk, increment]
+    Name varchar
+    Addr varchar
+}
+
+Table DcColumn {
+    ID int [pk, increment]
+    Name varchar
+    Size int [note: '一列容量，一般10个机柜']
+    DcId int [ref: > DC.ID]
+}
+
+Table Cabinet {
+    ID int [pk, increment]
+    Name varchar
+    Number int
+    Size int [note: '一个机柜多少U位']
+    DcColumnID int [ref: > DcColumn.ID]
+}
+
+Table CabinetPosition {
+    ID int [pk, increment]
+    Name varchar
+    Number int    
+    CabinetID int [ref: > Cabinet.ID]
+}
